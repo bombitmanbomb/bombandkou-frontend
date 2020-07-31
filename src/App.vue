@@ -10,19 +10,15 @@
       scroll-target="#scrolling-techniques-2"
     >
       <template v-slot:img="{ props }">
-        <v-img
-          v-bind="props"
-          gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
-        ></v-img>
+        <v-img v-bind="props" gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"></v-img>
       </template>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title
-        >Bomb & Kou<span :v-if="!$vuetify.breakpoint.mobile">
-          Sheet Music</span
-        ></v-toolbar-title
-      >
+      <v-toolbar-title>
+        Bomb & Kou
+        <span :v-if="!$vuetify.breakpoint.mobile">Sheet Music</span>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -39,8 +35,24 @@
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" clipped-left fixed app>
-      YES
+      <v-list></v-list>
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn block>Logout</v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
+    <v-main>
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid>
+        <!-- If using vue-router -->
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+
+    <v-footer app>
+      <!-- -->
+    </v-footer>
   </v-app>
 </template>
 
@@ -48,14 +60,14 @@
 //import HelloWorld from "./components/HelloWorld";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     // HelloWorld
   },
 
   data: () => ({
-    drawer: false,
-  }),
+    drawer: false
+  })
 };
 </script>
