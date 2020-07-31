@@ -20,6 +20,7 @@ app.set("trust proxy");
 
 app.use(express.static("dist"));
 
+app.use('/api', require("./server/API"))
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT || 8080, () => {
