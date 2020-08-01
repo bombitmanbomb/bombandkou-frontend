@@ -34,7 +34,7 @@ function setRoutes(vars){
       }
       next()
   })
-  routes.all("*", (req,res)=>{res.status(400).json({error:"Supply valid api version", 'Versions':api_cache})})
+  routes.all("*", (req,res)=>{res.status(400).json({error:"Supply valid api version", 'Versions':api_cache.filter((endpoint)=>{return !endpoint.startsWith("_")})})})
 }
 
 

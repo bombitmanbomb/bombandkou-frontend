@@ -4,7 +4,6 @@
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
-var history = require('connect-history-api-fallback');
 const app = express();
 const path = require("path")
 function checkHttps(req, res, next) {
