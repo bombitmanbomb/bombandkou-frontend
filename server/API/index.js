@@ -1,6 +1,7 @@
 const routes = require('express').Router();
 
 var fs = require('fs');
+const api = require('./v1');
 var getDirs = function(rootDir, cb) { 
     fs.readdir(rootDir, function(err, files) { 
         var dirs = []; 
@@ -27,6 +28,12 @@ function setRoutes(vars){
     api_cache.push(version)
     routes.use(`/${version}`,require(`./${version}`))
   }
+  routes.all("*", (req,res,next)=>{
+      if (req.method=="OPTIONS") {
+          return res.status(200).json(api_cache)
+      }
+      next()
+  })
   routes.all("*", (req,res)=>{res.status(400).json({error:"Supply valid api version", 'Versions':api_cache})})
 }
 

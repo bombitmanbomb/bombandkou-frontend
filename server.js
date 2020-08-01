@@ -4,7 +4,9 @@
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
+var history = require('connect-history-api-fallback');
 const app = express();
+const path = require("path")
 function checkHttps(req, res, next) {
   // protocol check, if http, redirect to https
 
@@ -18,10 +20,9 @@ function checkHttps(req, res, next) {
 }
 app.set("trust proxy");
 
-app.use(express.static("dist"));
 
 app.use('/api', require("./server/API"))
-
+app.get("*",(req,res,next)=>{res.sendFile(path.join(__dirname,"dist/index.html"))})
 // listen for requests :)
 const listener = app.listen(process.env.PORT || 8080, () => {
   console.log("Your app is listening on port " + listener.address().port);
