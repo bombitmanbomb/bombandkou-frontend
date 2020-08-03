@@ -6,6 +6,7 @@
 const express = require("express");
 const app = express();
 const path = require("path")
+
 function checkHttps(req, res, next) {
   // protocol check, if http, redirect to https
 
@@ -21,7 +22,20 @@ app.set("trust proxy");
 
 
 app.use('/api', require("./server/API"))
-app.get("*",(req,res,next)=>{res.sendFile(path.join(__dirname,"dist/index.html"))})
+app.get("/:assetType/:assetFile", (req, res, next) => {
+  switch (req.params.assetType) {
+    case "css":
+    case "js":
+      return res.sendFile(path.join(__dirname, `/dist/${req.params.assetType}/${req.params.assetFile}`), {
+        dotfiles: "ignore"
+      }, (err) => err ? res.sendStatus(404) : console.log(`sent /dist/${req.params.assetType}/${req.params.assetFile}`));
+    default:
+      return next();
+  }
+})
+app.get("*", (req, res, next) => {
+  res.sendFile(path.join(__dirname, "dist/index.html"))
+})
 // listen for requests :)
 const listener = app.listen(process.env.PORT || 8080, () => {
   console.log("Your app is listening on port " + listener.address().port);
