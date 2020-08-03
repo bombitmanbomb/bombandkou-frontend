@@ -6,7 +6,8 @@
 const express = require("express");
 const app = express();
 const path = require("path")
-
+//const cors = require("cors")
+//app.use(cors())
 function checkHttps(req, res, next) {
   // protocol check, if http, redirect to https
 
@@ -19,7 +20,10 @@ function checkHttps(req, res, next) {
   }
 }
 app.set("trust proxy");
-
+app.all("*",(req,res,next)=>{
+  console.log(`${req.ip}-${req.method}: ${req.url}`)
+  next()
+})
 
 app.use('/api', require("./server/API"))
 app.get("/:assetType/:assetFile", (req, res, next) => {
@@ -28,12 +32,13 @@ app.get("/:assetType/:assetFile", (req, res, next) => {
     case "js":
       return res.sendFile(path.join(__dirname, `/dist/${req.params.assetType}/${req.params.assetFile}`), {
         dotfiles: "ignore"
-      }, (err) => err ? res.sendStatus(404) : console.log(`sent /dist/${req.params.assetType}/${req.params.assetFile}`));
+      }, (err) => err ? res.sendStatus(404) : console.log(`SENT /dist/${req.params.assetType}/${req.params.assetFile}`));
     default:
       return next();
   }
 })
 app.get("*", (req, res, next) => {
+  console.log("SENT /dist/index.html")
   res.sendFile(path.join(__dirname, "dist/index.html"))
 })
 // listen for requests :)

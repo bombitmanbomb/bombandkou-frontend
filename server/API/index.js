@@ -30,7 +30,7 @@ function setRoutes(vars){
   }
   routes.all("*", (req,res,next)=>{
       if (req.method=="OPTIONS") {
-          return res.status(200).json(api_cache)
+          return res.status(200).json(api_cache.filter((endpoint)=>{return !endpoint.startsWith("_")}))
       }
       next()
   })

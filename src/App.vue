@@ -15,7 +15,7 @@
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>
+      <v-toolbar-title to="Home">
         Bomb & Kou
         <span :v-if="!$vuetify.breakpoint.mobile">Sheet Music</span>
       </v-toolbar-title>
@@ -24,10 +24,6 @@
 
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
       </v-btn>
 
       <v-btn icon>
